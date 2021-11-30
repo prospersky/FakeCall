@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             println("Setting Hour : $setHour")
             println("Setting Minute : $setMinute")
 
-            addAlarm();
+  //          addAlarm();
         }
     }
 
