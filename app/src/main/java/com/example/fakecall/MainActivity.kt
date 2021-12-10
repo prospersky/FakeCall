@@ -2,100 +2,95 @@ package com.example.fakecall
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.icu.util.Calendar
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.TextView
-import android.widget.TimePicker
+import android.widget.*
 import androidx.annotation.RequiresApi
-import java.time.LocalDate
-import java.time.LocalDateTime
-import kotlin.concurrent.timer
+import java.lang.System.currentTimeMillis
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
-
-    private var count1 = 0
-    private var setHour = 0
-    private var setMinute = 0
-    private var resHour = 0
-    private var resMinute = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val dateAndtime: LocalDateTime = LocalDateTime.now()
-        val onlyDate: LocalDate = LocalDate.now()
-        val setTime: TimePicker = findViewById(R.id.timepicker)
+        val timePicker: TimePicker = findViewById(R.id.timepicker)
+        lateinit var toast: Toast
 
-        println("Current date and time: $dateAndtime")
-        println("Current date: $onlyDate")
+        val nameEditText: EditText = findViewById(R.id.editText_name)
 
-        val startButton: Button = findViewById(R.id.button1)
+        // Alarm manager
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val bundle = Bundle()
+        var pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+//        var pendingIntent: PendingIntent
+/*
+          // Broadcast Receiver
+//        val alarmReceiver : BroadcastReceiver = AlarmReceiver()
+//        val filter = IntentFilter().apply{
+//            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+//        }
+//        registerReceiver(alarmReceiver, filter)
+*/
+        toast = Toast.makeText(this, "Please setting calling time", Toast.LENGTH_LONG)
+        toast.show()
+
+        // Alarm set up Button Click event
+        val startButton: ImageButton = findViewById(R.id.button_save)
         startButton.setOnClickListener {
-            startTimer()
+            // Except set current time
+            if (timePicker.minute == Calendar.getInstance().get(Calendar.MINUTE)) {
+                toast.cancel()
+                toast = Toast.makeText(this, "Cannot set current minute", Toast.LENGTH_LONG)
+                toast.show()
+            }
+            else {
+                val calendar: Calendar = Calendar.getInstance().apply {
+                    timeInMillis = currentTimeMillis()
+                    set(Calendar.HOUR_OF_DAY, timePicker.hour)
+                    set(Calendar.MINUTE, timePicker.minute)
+                    set(Calendar.SECOND, 0) // to operate on time
+                }
+
+                bundle.putString("Caller Name",nameEditText.text.toString())
+                intent.putExtra("bundle",bundle)
+
+                println("선택 시간 : " + timePicker.hour + ", 선택 분 : " + timePicker.minute)
+
+//                intent.putExtra("Caller Name",nameEditText.text.toString())
+
+                println("nameEditText : " + nameEditText.text.toString())
+                //println("getStringExtra : " + intent.getStringExtra("Caller Name"))
+                println("getStringExtra : " + intent.getBundleExtra("bundle")!!.getString("Caller Name"))
+
+                pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+               //alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+                this.finish()
+            }
         }
 
-        val stopButton: Button = findViewById(R.id.button2)
+        // Alarm cancel button Click event
+        val stopButton: ImageButton = findViewById(R.id.button_cancel)
         stopButton.setOnClickListener {
-
-            setHour = setTime.hour;
-            setMinute = setTime.minute;
-
-            println("Setting Hour : $setHour")
-            println("Setting Minute : $setMinute")
-
-  //          addAlarm();
+            toast.cancel()
+            toast = Toast.makeText(this, "Cancel calling", Toast.LENGTH_LONG)
+            toast.show()
+            alarmManager.cancel(pendingIntent)
         }
-    }
 
-    private fun startTimer() {
-        val timer = timer(period = 1000) {
-            count1++
-            runOnUiThread {
-                val timerTextView : TextView = findViewById(R.id.textView)
-                timerTextView.text = "START"
-            }
-
-            if (count1 == 3) {
-                count1 = 0
-                cancel()
-                println("타이머 종료")
-            }
-        }
-    }
-
-    private fun setAlarm(){
-        var alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        var now = Calendar.getInstance()
-        var calendarList = ArrayList<Calendar>()
-
-        for (i in 1..number)
-        cal.set(Calendar.YEAR, 2021)
-        cal.set(Calendar.MONTH, 11)
-        cal.set(Calendar.DAY_OF_MONTH, 25)
-        cal.set(Calendar.HOUR_OF_DAY, 1)
-        cal.set(Calendar.MINUTE, 56)
-        cal.set(Calendar.SECOND, 0)
-
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pIntent)
-
-        println("알람11111111111111111111111111")
-    }
-}
-
-class Alarm: BroadcastReceiver(){
-    override fun onReceive(context: Context?, intent: Intent?) {
-        if(intent != null){
-            Log.e("알람", System.currentTimeMillis().toString())
-            println("알람2222222222222")
+        val testButton: Button = findViewById(R.id.button_10min)
+        testButton.setOnClickListener {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, currentTimeMillis(), pendingIntent)
+            this.finish()
         }
     }
 }

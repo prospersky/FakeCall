@@ -3,7 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22239583333333332" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/bg_incoming.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/bg_incoming_1.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/bg_incoming_2.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/bg_incoming_3.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/bg_incoming_4.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/bg_incoming_5.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/bg_incoming_list.xml" value="0.15" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22239583333333332" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/incoming.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/shape_button.xml" value="0.19791666666666666" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/shape_button2.xml" value="0.21510416666666668" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/shape_button_squared.xml" value="0.14444444444444443" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/drawable/shape_rounded2.xml" value="0.21510416666666668" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/layout/activity_answer.xml" value="0.14" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/layout/activity_call.xml" value="0.1" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/layout/activity_incoming.xml" value="0.14" />
+        <entry key="..\:/Project/AndroidStudio/FakeCall/app/src/main/res/layout/activity_main.xml" value="0.18" />
       </map>
     </option>
   </component>
