@@ -15,13 +15,14 @@
         android:layout_marginEnd="125dp"
         android:contentDescription="TODO"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/textView_name"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/testtt"
+        app:srcCompat="@drawable/profile_default"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -36,7 +37,6 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="@+id/imageView_face2"
         app:layout_constraintStart_toStartOf="@+id/imageView_face2"
         app:layout_constraintTop_toBottomOf="@+id/imageView_face2" />
@@ -61,18 +61,19 @@
         app:srcCompat="@drawable/icon_hangup" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginEnd="151dp"
+        android:id="@+id/textView_second"
+        android:layout_width="50dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="158dp"
+        android:layout_marginEnd="158dp"
         android:layout_marginBottom="20dp"
-        android:text="TextView"
+        android:text="11:11"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/imageButton3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_name2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_name2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/imageButton"

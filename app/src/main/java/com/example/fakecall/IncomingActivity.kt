@@ -1,8 +1,11 @@
 package com.example.fakecall
 
+import android.Manifest
+import android.app.Activity
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
@@ -15,13 +18,19 @@ import androidx.core.app.ActivityCompat
 import com.ebanx.swipebtn.SwipeButton
 import kotlin.system.exitProcess
 
+import android.net.Uri
+import android.provider.MediaStore
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker.checkPermission
+import java.security.AccessController.checkPermission
+
 class IncomingActivity : AppCompatActivity() {
 
     private lateinit var incomingAnimation: AnimationDrawable
     private lateinit var rootLayout: ConstraintLayout
     private lateinit var textViewName: TextView
-
-    public lateinit var incomingActivity: IncomingActivity
 
     @RequiresApi(Build.VERSION_CODES.O_MR1)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +40,7 @@ class IncomingActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true)
             setTurnScreenOn(true)
-            val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
             keyguardManager.requestDismissKeyguard(this, null)
         }
         else {
@@ -39,19 +48,18 @@ class IncomingActivity : AppCompatActivity() {
                     WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
         }
-//        val data = intent.getBundleExtra("bundle")
-//        if (data != null) {
-//            println(data.getString("Caller Name"))
-//        }
 
-        val data = intent.getStringExtra("Caller Name")
+        val callerName = intent.getStringExtra("Caller Name")
+        val callerImage: ImageView = findViewById(R.id.imageView_face)
+
+        val uri = intent.getParcelableExtra<Uri>("uri")
+        callerImage.setImageURI(uri)
 
         textViewName = findViewById(R.id.textView_name)
-        textViewName.text = data
+        textViewName.text = callerName
 
         rootLayout = findViewById(R.id.root_layout)
         incomingAnimation = rootLayout.background as AnimationDrawable
-
         incomingAnimation.setEnterFadeDuration(2000)
         incomingAnimation.setExitFadeDuration(4000)
         incomingAnimation.start()
@@ -61,12 +69,13 @@ class IncomingActivity : AppCompatActivity() {
         answerButton.setOnStateChangeListener() {
             val answerIntent = Intent(this, AnswerActivity::class.java)
             answerIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            answerIntent.putExtra("uri",uri)
             //answerIntent.putExtra("Caller Name", data?.getString("Caller Name"))
-            this.startActivity(answerIntent)
             this.finish()
+            this.startActivity(answerIntent)
         }
 
-        // swipe event ca button
+        // swipe event cancel button
         val hangupButton: SwipeButton = findViewById(R.id.swipebutton_hangup)
         hangupButton.setOnStateChangeListener() {
             ActivityCompat.finishAffinity(this)

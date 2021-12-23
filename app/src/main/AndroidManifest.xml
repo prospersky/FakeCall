@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.fakecall">
 
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -31,7 +37,19 @@
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true"
+            android:permission="TODO"
+            tools:ignore="ExportedReceiver" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.fakecall.provider"
+            android:exported="false"
+            android:permission="readPermission"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
